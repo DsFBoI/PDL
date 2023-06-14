@@ -1,0 +1,12 @@
+<let,->
+<id,1>
+<string,->
+<let,->
+<id,2>
+<int,->
+<let,->
+<id,3>
+<boolean,->
+<let,->
+<id,4>
+<string,->

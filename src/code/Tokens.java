@@ -1,3 +1,5 @@
+package src.code;
+
 import java.io.*;
 import java.util.*;
 
@@ -18,8 +20,8 @@ public class Tokens {
     static int saltos[] = new int[100];
     static int contadortok = 0;
     static int totaltok = 0;
-    static String rutaL = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\primera entrega\\pruebas\\pruebas\\prueba_if.txt";
-    static String rutaW = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\primera entrega\\pruebas\\pruebas\\prueba_if_sem.txt";
+    static String rutaL = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if.txt";
+    static String rutaW = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
     static boolean checkpalabra = false;
     static boolean error = false;
     static String[]hola;
@@ -422,6 +424,7 @@ public class Tokens {
 				char car = (char) caracterleido;
                 if(car == '\n'){
                     
+                    
                     saltos[lineas] = contadortok;
                     lineas++;
                     totaltok += contadortok;
@@ -435,17 +438,10 @@ public class Tokens {
 			}
             saltos[lineas] = contadortok;
             totaltok += contadortok;
-            
-			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 	        System.exit(1);
 	    }
-        
-        
-		
 	}
-    
-    
 }
