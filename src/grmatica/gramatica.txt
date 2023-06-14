@@ -1,0 +1,95 @@
+Terminales = { int boolean string , if return id input let while print function entera cad ( ) { } == = %= ; + ! true false eof }
+
+NoTerminales = { S A B C K D E F I N M T G H J Y V W U Q O L R P }
+
+Axioma = S
+
+
+Producciones = {
+ S -> if ( A ) D
+ S -> return N ; S
+ S -> id  Y ; S
+ S -> input B
+ S -> let id E ; S
+ S -> while ( A ) { S } S
+ S -> print W ; S
+ S -> function id G ( H ) { S } S 
+ S -> eof
+ A -> ! id
+ A -> id C
+ C -> == K
+ C -> lambda
+ K -> id
+ K -> entera 
+ K -> cad
+ E -> int
+ E -> boolean
+ E -> string
+ F -> cad I
+ F -> id I
+ F -> entera I 
+ I -> + F
+ I -> lambda
+ N -> id L 
+ N -> entera L 
+ N -> cad
+ N -> lambda
+ N -> ( N ) 
+ T -> entera L
+ T -> false
+ T -> true
+ T -> id U
+ T -> ! M
+ T -> cad
+ M -> true
+ M -> false
+ M -> id
+ G -> lambda
+ G -> int 
+ G -> boolean 
+ G -> string
+ H -> int id J
+ H -> string id J
+ H -> boolean id J
+ H -> lambda
+ J -> , H
+ J -> lambda
+ Y -> %= V 
+ Y -> = T 
+ Y -> == T
+ V -> entera 
+ V -> id
+ W -> ( F ) 
+ W -> F
+ U -> lambda
+ U -> ( Q ) ; 
+ U -> + R 
+ U -> == P 
+ Q -> id O
+ O -> , Q 
+ O -> lambda
+ R -> entera L 
+ R -> id L
+ R -> ( R ) L 
+ L -> + R 
+ L -> lambda
+ L -> == P 
+ P -> id I 
+ P -> boolean
+ P -> string 
+ P -> entera I 
+ P -> cad I 
+ B -> ( id ) ; S
+ B -> id ; S
+ C -> ( Q )
+ Q -> lambda
+ Q -> entera O
+ L -> ( Q ) L
+ Q -> boolean O
+ Q -> string O
+ A -> entera C
+ S -> lambda 
+ D -> { S } S
+ D -> S
+ D -> lambda
+}

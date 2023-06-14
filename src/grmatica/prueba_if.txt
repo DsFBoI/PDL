@@ -1,0 +1,6 @@
+let  s string
+let a int 
+let bb boolean 
+let bc string
+
+no hace el último token si no hay espacio después de string
