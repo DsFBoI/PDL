@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 public class Analizador {
-    private static String parse = "";
+    private static String parse = "Des ";
     private static int[] saltos;
     private static Stack<Pair<String, String>> pila = new Stack();
     private static Stack<Pair<String, String>> pilaAux = new Stack();
@@ -18,9 +18,13 @@ public class Analizador {
     private static int llaves = 0;
     private static int idPos;
 
+    private static boolean continuaP = false;
+
     static Map<Integer,String> mapa_id_pos = new HashMap<>();
 
     private static String tokenAct;
+
+    private static int nig2=0;
 
     static List<String> terminales = new ArrayList<String>(){
         { /* Palabras reservadas */
@@ -70,7 +74,7 @@ public class Analizador {
         String tokenCogido;
 
 
-        try(FileReader fr = new FileReader("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
             BufferedReader br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
             pila.push(new Pair<String,String>("S", "-"));
@@ -81,9 +85,9 @@ public class Analizador {
 
                 if(!terminales.contains(pilaArriba.getKey())){
                     Pair<String,String> pop = pilaAux.push(pila.pop());
-                    if(contieneNumeros(pop.getKey())){
+                    while(contieneNumeros(pop.getKey())){
                        pop = pilaAux.push(pila.pop());
-                       //ejecutar accion semantica
+                       //acciones_sem(pop.getKey());
                     }
                     String estado = pop.getKey();
                     if(!error){
@@ -130,7 +134,7 @@ public class Analizador {
                         System.out.println(mapa_id_pos.get(idPos));
                     }
 
-                    equiparar(pila.peek().getKey(), tokenCogido);
+                    equiparar(pila.peek().getKey(), tokenAct);
 
                     switch(tokenAct){
                         case "apar":
@@ -153,15 +157,17 @@ public class Analizador {
                 if(llaves != 0 ){
                     // error diferencia de llaves
                 }
-                try (FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\primera entrega\\pruebas\\pruebas\\parse.txt"), true);){
-                    fw.write(parse);
 
-                } catch (Exception e) {
-                    System.out.println("no funciona el parse");
-                }
-                System.out.println(parse);
 
             }
+            try (FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\parse.txt"), true);){
+                fw.write(parse);
+
+
+            } catch (Exception e) {
+                System.out.println("no funciona el parse");
+            }
+            System.out.println(parse);
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -197,108 +203,132 @@ public class Analizador {
             case "S":
                 caseS(tokenAct);
                 continuar(estado);
-                equiparar(TokenAct.pila.peek().getKey());
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "B":
                 caseB(tokenAct);
                 continuar(estado);
-                equiparar(TokenAct,pila.peek().getKey());
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "T":
                 caseT(tokenAct);
                 continuar(estado);
-                equiparar(TokenAct,pila.peek().getKey());
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "F":
                 caseF(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "G":
                 caseG(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "H":
                 caseH(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "N":
                 caseN(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "M":
                 caseM(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "D":
                 caseD(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "K":
                 caseK(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "I":
                 caseI(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "L":
                 caseL(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "A":
                 caseA(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "X":
                 caseX(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "R":
                 caseR(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "P":
                 caseP(tokenAct);
-                continuar(estado);
+                if(continuaP && nig2>1){
+                    continuar(estado);
+                    continuaP=false;
+                }
+                equiparar(tokenAct,pila.peek().getKey());
+
+
                 break;
 
             case "J":
                 caseJ(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "Y":
                 caseY(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "V":
                 caseV(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             case "Z":
                 caseZ(tokenAct);
                 continuar(estado);
+                equiparar(tokenAct,pila.peek().getKey());
                 break;
 
             default:
-                equiparar(pila.peek().getValue(), tokenAct);
+                if(!contieneNumeros(estado)) {
+                    equiparar(pila.peek().getKey(), tokenAct);
+                }
         }
     }
     private static void caseS(String tokenAct) {
@@ -323,9 +353,9 @@ public class Analizador {
                 pila.push(new Pair<>("3.2", "-"));
                 pila.push(new Pair<>("D", "-"));
                 pila.push(new Pair<>("3.1", "-"));
-                pila.push(new Pair<>("apar", "-"));
-                pila.push(new Pair<>("R", "-"));
                 pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("apar", "-"));
                 pila.push(new Pair<>("if", "-"));
                 break;
             case "let":
@@ -347,7 +377,7 @@ public class Analizador {
                 pila.push(new Pair<>("M", "-"));
                 pila.push(new Pair<>("akey", "-"));
                 pila.push(new Pair<>("cpar", "-"));
-                pila.push(new Pair<>("E", "-"));
+                pila.push(new Pair<>("R", "-"));
                 pila.push(new Pair<>("apar", "-"));
                 pila.push(new Pair<>("while", "-"));
                 pila.push(new Pair<>("5.1", "-"));
@@ -391,7 +421,7 @@ public class Analizador {
             pila.push(new Pair<>("10.7", "-"));
             pila.push(new Pair<>("ckey", "-"));
             pila.push(new Pair<>("10.6", "-"));
-            pila.push(new Pair<>("S", "-"));
+            pila.push(new Pair<>("M", "-"));
             pila.push(new Pair<>("10.5", "-"));
             pila.push(new Pair<>("akey", "-"));
             pila.push(new Pair<>("10.4", "-"));
@@ -442,7 +472,7 @@ public class Analizador {
             case "coma":
                 parse += " 17";
                 pila.push(new Pair<>("13.2", "-"));
-                pila.push(new Pair<>("K", "-"));
+                pila.push(new Pair<>("N", "-"));
                 pila.push(new Pair<>("13.1", "-"));
                 pila.push(new Pair<>("id", "-"));
                 pila.push(new Pair<>("T", "-"));
@@ -610,6 +640,8 @@ public class Analizador {
     private static void caseP(String tokenAct) {
         /*P -> == J {28.1} P {28.2} */
         if ("ig2".equals(tokenAct)) {
+            continuaP = true;
+            nig2++;
             parse += " 36";
             pila.push(new Pair<>("28.2", "-"));
             pila.push(new Pair<>("P", "-"));
@@ -617,6 +649,9 @@ public class Analizador {
             pila.push(new Pair<>("J", "-"));
             pila.push(new Pair<>("ig2", "-"));
         } else {
+            while(contieneNumeros(pila.peek().getKey())){
+                pila.pop();
+            }
             parse += " 37";
         }
     }
@@ -704,13 +739,19 @@ public class Analizador {
             pila.push(new Pair<>("L", "-"));
             pila.push(new Pair<>("apar", "-"));
         } else {
+            while(contieneNumeros(pila.peek().getKey())){
+                pila.pop();
+            }
             parse += " 49";
         }
     }
 
     private static void continuar(String estado){
-        if(!terminales.contains(pila.peek().getKey())){
-            estado = pila.peek().getKey();
+        while(contieneNumeros(pila.peek().getKey())){
+            pila.pop();
+        }
+        if(!terminales.contains(pila.peek().getKey())&&!contieneNumeros(pila.peek().getKey())){
+            estado = pila.pop().getKey();
             readToken(tokenAct, estado);
         }
     }
@@ -720,16 +761,19 @@ public class Analizador {
                 return true;
             }
         }
-    return false;
+        return false;
     }
 
     private static void equiparar(String token, String estado) {
         if(token.equals(estado)){
-            pila.pop(); 
+            pilaAux.push(pila.pop());
         }
         else{
-            //errores
-            
-        }
+            //erroress
+      }
+    }
+
+    private static void acciones_sem(String token){
+        pilaAux.push(pila.pop());
     }
 }

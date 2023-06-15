@@ -15,7 +15,7 @@ B -> while ( R ) { M }
 T -> int
 T -> string
 T -> boolean
-F -> function id G ( H ) { S }
+F -> function id G ( H ) { M }
 G -> T
 G -> lambda
 H -> T id N
@@ -28,7 +28,7 @@ D -> { M }
 D -> K
 K -> return X ;
 K -> print ( R ) ;
-K -> input ( id ) ;
+K -> input id  ;
 K -> id  I
 I -> ( L ) ;
 I -> = R ;
