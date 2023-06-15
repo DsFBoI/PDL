@@ -20,8 +20,8 @@ public class Tokens {
     static int saltos[] = new int[100];
     static int contadortok = 0;
     static int totaltok = 0;
-    static String rutaL = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if.txt";
-    static String rutaW = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
+    static String rutaL = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if.txt";
+    static String rutaW = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
     static boolean checkpalabra = false;
     static boolean error = false;
     static String[]hola;

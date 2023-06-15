@@ -1,7 +1,6 @@
 package src.code;
 
-
-import javafx.util.Pair;
+//import javafx.util.Pair;
 
 import java.io.*;
 
@@ -71,7 +70,7 @@ public class Analizador {
         String tokenCogido;
 
 
-        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
             BufferedReader br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
             pila.push(new Pair<String,String>("S", "-"));
@@ -82,19 +81,27 @@ public class Analizador {
 
                 if(!terminales.contains(pilaArriba.getKey())){
                     Pair<String,String> pop = pilaAux.push(pila.pop());
+                    if(contieneNumeros(pop.getKey())){
+                       pop = pilaAux.push(pila.pop());
+                       //ejecutar accion semantica
+                    }
                     String estado = pop.getKey();
                     if(!error){
                         tokenCogido = br.readLine();
                         if(tokenCogido == null){
-                            parse+=" 9";
+                            parse += " 3";
                             break;
                         }
                         tokenCogido = tokenCogido.replace("<", "");
-                        tokenCogido = tokenCogido.replace(">", "");
+                        tokenCogido = tokenCogido.replace(">",  "");
                         split = tokenCogido.split(",");
 
                         tokenAct = split[0];
-
+                        
+                        if(tokenAct.equals("id")){
+                            idPos = Integer.parseInt(split[1]);
+                            System.out.println(mapa_id_pos.get(idPos));
+                        }
 
                     }else{
                         error = false;
@@ -104,11 +111,11 @@ public class Analizador {
                 }else{
                     tokenCogido = br.readLine();
                     if(tokenCogido == null && pilaArriba.getKey().equals("$")){
-                        parse += " 9";
+                        parse += " 3";
                         break;
                     }else if(tokenCogido == null && !pilaArriba.getKey().equals("$")){
                         //error de que ha finalizado cuando no debia
-                        parse += " 9";
+                        parse += " 3";
                         break;
                     }
 
@@ -122,6 +129,8 @@ public class Analizador {
                         idPos = Integer.parseInt(split[1]);
                         System.out.println(mapa_id_pos.get(idPos));
                     }
+
+                    equiparar(pila.peek().getKey(), tokenCogido);
 
                     switch(tokenAct){
                         case "apar":
@@ -137,9 +146,6 @@ public class Analizador {
                             --llaves;
                             break;
                     }
-
-
-
                 }
                 if(parentesis != 0){
                     //error diferencia de parentesis
@@ -155,10 +161,6 @@ public class Analizador {
                 }
                 System.out.println(parse);
 
-
-
-
-
             }
 
         }catch (IOException e) {
@@ -169,13 +171,559 @@ public class Analizador {
 
     }
 
-    private static void readToken(String tokenAct, String estado) {
+    public static int linea_actu(int cont_token){
+        int linea = 1;
+        int tokens = 0;
+        for(int i = 0 ; i < saltos.length ; i++ ){
+            tokens += saltos[i];
+            if(tokens < cont_token-1){
+                linea = i+1;
 
-        switch (estado){
+            }else  if(tokens == cont_token-1){
+                linea = i+1;
+                break;
+            }else if( i+1 != saltos.length && tokens < cont_token-1+ saltos[i]){
+                linea = i+1;
+                break;
+            }
 
         }
-
-
+        return linea;
     }
 
+
+    private static void readToken(String tokenAct, String estado) {
+        switch (estado){
+            case "S":
+                caseS(tokenAct);
+                continuar(estado);
+                break;
+
+            case "B":
+                caseB(tokenAct);
+                continuar(estado);
+                break;
+
+            case "T":
+                caseT(tokenAct);
+                continuar(estado);
+                break;
+
+            case "F":
+                caseF(tokenAct);
+                continuar(estado);
+                break;
+
+            case "G":
+                caseG(tokenAct);
+                continuar(estado);
+                break;
+
+            case "H":
+                caseH(tokenAct);
+                continuar(estado);
+                break;
+
+            case "N":
+                caseN(tokenAct);
+                continuar(estado);
+                break;
+
+            case "M":
+                caseM(tokenAct);
+                continuar(estado);
+                break;
+
+            case "D":
+                caseD(tokenAct);
+                continuar(estado);
+                break;
+
+            case "K":
+                caseK(tokenAct);
+                continuar(estado);
+                break;
+
+            case "I":
+                caseI(tokenAct);
+                continuar(estado);
+                break;
+
+            case "L":
+                caseL(tokenAct);
+                continuar(estado);
+                break;
+
+            case "A":
+                caseA(tokenAct);
+                continuar(estado);
+                break;
+
+            case "X":
+                caseX(tokenAct);
+                continuar(estado);
+                break;
+
+            case "R":
+                caseR(tokenAct);
+                continuar(estado);
+                break;
+
+            case "P":
+                caseP(tokenAct);
+                continuar(estado);
+                break;
+
+            case "J":
+                caseJ(tokenAct);
+                continuar(estado);
+                break;
+
+            case "Y":
+                caseY(tokenAct);
+                continuar(estado);
+                break;
+
+            case "V":
+                caseV(tokenAct);
+                continuar(estado);
+                break;
+
+            case "Z":
+                caseZ(tokenAct);
+                continuar(estado);
+                break;
+        }
+    }
+    private static void caseS(String tokenAct) {
+        if ("function".equals(tokenAct)) {/* S -> F S {1.1}*/
+            parse += " 2";
+            pila.push(new Pair<>("1.1", "-"));
+            pila.push(new Pair<>("S", "-"));
+            pila.push(new Pair<>("F", "-"));
+        } else {/*S -> B S*/
+            parse += " 1";
+            pila.push(new Pair<>("2.1", "-"));
+            pila.push(new Pair<>("S", "-"));
+            pila.push(new Pair<>("B", "-"));
+        }
+    }
+
+    private static void caseB(String tokenAct) {
+        switch (tokenAct) {
+            case "if":
+                /* B -> if ( R ) {3.1} D {3.2} */
+                parse += " 5";
+                pila.push(new Pair<>("3.2", "-"));
+                pila.push(new Pair<>("D", "-"));
+                pila.push(new Pair<>("3.1", "-"));
+                pila.push(new Pair<>("apar", "-"));
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("if", "-"));
+                break;
+            case "let":
+                /* B -> {4.1} let id T {4.2} ; {4.3} */
+                parse += " 6";
+                pila.push(new Pair<>("4.3", "-"));
+                pila.push(new Pair<>("pcoma", "-"));
+                pila.push(new Pair<>("4.2", "-"));
+                pila.push(new Pair<>("T", "-"));
+                pila.push(new Pair<>("id", "-"));
+                pila.push(new Pair<>("let", "-"));
+                pila.push(new Pair<>("4.1", "-"));
+                break;
+            case "while":
+                /*B -> {5.1} while ( E ) { M } {5.1}*/ //NO ESTOY SEGURA DE ESTO!!!!
+                parse += " 7";
+                pila.push(new Pair<>("5.2", "-"));
+                pila.push(new Pair<>("ckey", "-"));
+                pila.push(new Pair<>("M", "-"));
+                pila.push(new Pair<>("akey", "-"));
+                pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("E", "-"));
+                pila.push(new Pair<>("apar", "-"));
+                pila.push(new Pair<>("while", "-"));
+                pila.push(new Pair<>("5.1", "-"));
+                break;
+            default :
+                /* B-> {6.2} K {6.1}*/
+                parse += " 4";
+                pila.push(new Pair<>("6.1", "-"));
+                pila.push(new Pair<>("K", "-"));
+                pila.push(new Pair<>("6.2", "-"));
+                break;
+        }
+    }
+
+    private static void caseT(String tokenAct) {
+        switch (tokenAct) {
+            case "int":
+                /* T -> int {7.1}*/
+                parse += " 8";
+                pila.push(new Pair<>("7.1", "-"));
+                pila.push(new Pair<>("int", "-"));
+                break;
+            case "string":
+                /* T -> string {8.1}  */
+                parse += " 9";
+                pila.push(new Pair<>("8.1", "-"));
+                pila.push(new Pair<>("string", "-"));
+                break;
+            case "boolean":
+                /*T-> boolean {9.1}*/
+                parse += " 10";
+                pila.push(new Pair<>("9.1", "-"));
+                pila.push(new Pair<>("boolean", "-"));
+                break;
+        }
+    }
+
+    private static void caseF(String tokenAct) {
+        /* F -> {10.1} function id {10.2} G {10.3} ( H ) {10.4} { {10.5} S {10.6} } {10.7}*/
+        if(tokenAct.equals("function")){
+            pila.push(new Pair<>("10.7", "-"));
+            pila.push(new Pair<>("ckey", "-"));
+            pila.push(new Pair<>("10.6", "-"));
+            pila.push(new Pair<>("S", "-"));
+            pila.push(new Pair<>("10.5", "-"));
+            pila.push(new Pair<>("akey", "-"));
+            pila.push(new Pair<>("10.4", "-"));
+            pila.push(new Pair<>("cpar", "-"));
+            pila.push(new Pair<>("H", "-"));
+            pila.push(new Pair<>("apar", "-"));
+            pila.push(new Pair<>("10.3", "-"));
+            pila.push(new Pair<>("G", "-"));
+            pila.push(new Pair<>("10.2", "-"));
+            pila.push(new Pair<>("id", "-"));
+            pila.push(new Pair<>("function", "-"));
+            pila.push(new Pair<>("10.1", "-"));
+        }
+        parse += " 11";
+    }
+
+    private static void caseG(String tokenAct) {
+        if(tokenAct.equals("int") || tokenAct.equals("string") || tokenAct.equals("boolean")){
+            /* G -> T {11.1}*/
+            parse += " 12";
+            pila.push(new Pair<>("11.1", "-"));
+            pila.push(new Pair<>("T", "-"));
+        }
+        else {
+            /*G -> labmda*/
+            parse += " 13";
+        }
+    }
+
+    private static void caseH(String tokenAct) {
+        /* H -> T id {12.1} N {12.2} */
+        if(tokenAct.equals("int") || tokenAct.equals("string") || tokenAct.equals("boolean")){
+            parse += " 14";
+            pila.push(new Pair<>("12.2", "-"));
+            pila.push(new Pair<>("N", "-"));
+            pila.push(new Pair<>("12.1", "-"));
+            pila.push(new Pair<>("id", "-"));
+            pila.push(new Pair<>("T", "-"));
+        }
+        else{
+            parse += " 15";
+        }
+    }
+
+    private static void caseN(String tokenAct) {
+        switch (tokenAct){
+            /* N -> , T id {13.1} K {13.2}*/
+            case "coma":
+                parse += " 17";
+                pila.push(new Pair<>("13.2", "-"));
+                pila.push(new Pair<>("K", "-"));
+                pila.push(new Pair<>("13.1", "-"));
+                pila.push(new Pair<>("id", "-"));
+                pila.push(new Pair<>("T", "-"));
+                pila.push(new Pair<>("coma", "-"));
+                break;
+            default:
+                parse += " 16";
+                break;
+        }
+    }
+
+    private static void caseM(String tokenAct) {
+        /* M -> B {14.1} M {14.2}*/
+        if(tokenAct.equals("if")||tokenAct.equals("let")||tokenAct.equals("while")||tokenAct.equals("return")
+                ||tokenAct.equals("print")||tokenAct.equals("input")||tokenAct.equals("id")){
+            parse += " 18";
+            pila.push(new Pair<>("14.2", "-"));
+            pila.push(new Pair<>("M", "-"));
+            pila.push(new Pair<>("14.1", "-"));
+            pila.push(new Pair<>("B", "-"));
+        }
+        else{
+            /* M -> lambda*/
+            parse += " 19";
+        }
+    }
+
+    private static void caseD(String tokenAct) {
+        switch (tokenAct){
+            /*D -> { M } {15.1} */
+            case "akey":
+                parse += " 20";
+                pila.push(new Pair<>("15.1", "-"));
+                pila.push(new Pair<>("ckey", "-"));
+                pila.push(new Pair<>("M", "-"));
+                pila.push(new Pair<>("akey", "-"));
+                break;
+
+            default:
+                /*D -> K {16.1}*/
+                parse += " 21";
+                pila.push(new Pair<>("16.1", "-"));
+                pila.push(new Pair<>("K", "-"));
+                break;
+        }
+    }
+
+    private static void caseK(String tokenAct) {
+        switch (tokenAct){
+            case "return":
+                parse += " 22";
+                /* K -> return X ; {17.1}*/
+                pila.push(new Pair<>("17.1", "-"));
+                pila.push(new Pair<>("pcoma", "-"));
+                pila.push(new Pair<>("X", "-"));
+                pila.push(new Pair<>("return", "-"));
+                break;
+
+            case "print":
+                /* K -> print ( R ) ; {18.1}*/
+                parse += " 23";
+                pila.push(new Pair<>("18.1", "-"));
+                pila.push(new Pair<>("pcoma", "-"));
+                pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("apar", "-"));
+                pila.push(new Pair<>("print", "-"));
+                break;
+
+            case "input":
+                /* K -> input id ; {19.1}*/
+                parse += " 24";
+                pila.push(new Pair<>("19.1", "-"));
+                pila.push(new Pair<>("pcoma", "-"));
+                pila.push(new Pair<>("id", "-"));
+                pila.push(new Pair<>("input", "-"));
+                break;
+            /* K -> id {20.1} I {20.2}*/
+            case "id":
+                parse += " 25";
+                pila.push(new Pair<>("20.2", "-"));
+                pila.push(new Pair<>("I", "-"));
+                pila.push(new Pair<>("20.1", "-"));
+                pila.push(new Pair<>("id", "-"));
+                break;
+        }
+    }
+    
+    private static void caseI(String tokenAct) {
+        switch (tokenAct){
+            case "apar":
+                /* I -> ( L ) ;  {21.1} */
+                parse += " 26";
+                pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("L", "-"));
+                pila.push(new Pair<>("apar", "-"));
+                pila.push(new Pair<>("21.1", "-"));
+                break;
+            case "asig":
+                /* I -> %= R ; {22.1} */
+                parse += " 28";
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("asig", "-"));
+                pila.push(new Pair<>("22.1", "-"));
+                break;
+            case "eq":
+                /* I -> %= R ; {23.1} */
+                parse += " 27";
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("eq", "-"));
+                pila.push(new Pair<>("23.1", "-"));
+                break;
+
+        }
+    }
+
+    private static void caseL(String tokenAct) {
+        /*L -> {24.1} R {24.2} A {24.3}*/
+        if ("id".equals(tokenAct)||"apar".equals(tokenAct)||"entera".equals(tokenAct)||"true".equals(tokenAct)||"false".equals(tokenAct)||"cad".equals(tokenAct)||"neg".equals(tokenAct)) {
+            parse += " 29";
+            pila.push(new Pair<>("24.3", "-"));
+            pila.push(new Pair<>("A", "-"));
+            pila.push(new Pair<>("24.2", "-"));
+            pila.push(new Pair<>("R", "-"));
+            pila.push(new Pair<>("24.1", "-"));
+        } else {
+            parse += " 30";
+        }
+    }
+
+    private static void caseA(String tokenAct) {
+        /*A -> , R {25.1} A {25.2} */
+        if ("coma".equals(tokenAct)){
+            parse += " 31";
+            pila.push(new Pair<>("25.2", "-"));
+            pila.push(new Pair<>("A", "-"));
+            pila.push(new Pair<>("25.1", "-"));
+            pila.push(new Pair<>("R", "-"));
+            pila.push(new Pair<>("coma", "-"));
+        }else {
+            parse += " 32";
+        }
+    }
+
+    private static void caseX(String tokenAct) {
+        /*X -> R {26.1}*/
+        if ("id".equals(tokenAct)||"apar".equals(tokenAct)||"entera".equals(tokenAct)||"true".equals(tokenAct)||"false".equals(tokenAct)||"cad".equals(tokenAct)||"neg".equals(tokenAct)) {
+            parse += " 33";
+            pila.push(new Pair<>("26.1", "-"));
+            pila.push(new Pair<>("R", "-"));
+        } else {
+            parse += " 34";
+        }
+    }
+    
+    private static void caseR(String tokenAct){
+        /*R -> J {27.1} P {27.2}*/
+        parse += " 35";
+        pila.push(new Pair<>("27.2", "-"));
+        pila.push(new Pair<>("P", "-"));
+        pila.push(new Pair<>("27.1", "-"));
+        pila.push(new Pair<>("J", "-"));
+    }
+
+    private static void caseP(String tokenAct) {
+        /*P -> == J {28.1} P {28.2} */
+        if ("ig2".equals(tokenAct)) {
+            parse += " 36";
+            pila.push(new Pair<>("28.2", "-"));
+            pila.push(new Pair<>("P", "-"));
+            pila.push(new Pair<>("28.1", "-"));
+            pila.push(new Pair<>("J", "-"));
+            pila.push(new Pair<>("ig2", "-"));
+        } else {
+            parse += " 37";
+        }
+    }
+
+    private static void caseJ(String tokenAct) {
+        /*J -> V {29.1} Y {29.2} */
+        parse += " 38";
+        pila.push(new Pair<>("29.2", "-"));
+        pila.push(new Pair<>("Y", "-"));
+        pila.push(new Pair<>("29.1", "-"));
+        pila.push(new Pair<>("V", "-"));
+    }
+
+    private static void caseY(String tokenAct) {
+        /*Y -> + V {30.1} Y {30.2}*/
+        if ("sum".equals(tokenAct)) {
+            parse += " 39";
+            pila.push(new Pair<>("30.2", "-"));
+            pila.push(new Pair<>("Y", "-"));
+            pila.push(new Pair<>("30.1", "-"));
+            pila.push(new Pair<>("V", "-"));
+            pila.push(new Pair<>("sum", "-"));
+        } else {
+            parse += " 40";
+        }
+    }
+
+    private static void caseV(String tokenAct) {
+        switch (tokenAct) {
+            /*V -> id {31.1} Z {31.2}*/
+            case "id":
+                parse += " 41";
+                pila.push(new Pair<>("31.2", "-"));
+                pila.push(new Pair<>("Z", "-"));
+                pila.push(new Pair<>("31.1", "-"));
+                pila.push(new Pair<>("id", "-"));
+                break;
+            case "apar":
+                /*V -> ( {32.1} R ) {32.2}*/
+                parse += " 42";
+                pila.push(new Pair<>("32.2", "-"));
+                pila.push(new Pair<>("cpar", "-"));
+                pila.push(new Pair<>("R", "-"));
+                pila.push(new Pair<>("32.1", "-"));
+                pila.push(new Pair<>("apar", "-"));
+                break;
+
+            case "entera":
+                parse += " 43";
+                pila.push(new Pair<>("33.1", "-"));
+                pila.push(new Pair<>("entera", "-"));
+                break;
+            case "true":
+                parse += " 44";
+                pila.push(new Pair<>("34.1", "-"));
+                pila.push(new Pair<>("true", "-"));
+                break;
+            case "false":
+                parse += " 45";
+                pila.push(new Pair<>("35.1", "-"));
+                pila.push(new Pair<>("false", "-"));
+                break;
+            case "neg":
+                /*V -> ! id {36.1} Z {36.2}*/
+                parse += " 46";
+                pila.push(new Pair<>("36.2", "-"));
+                pila.push(new Pair<>("Z", "-"));
+                pila.push(new Pair<>("36.1", "-"));
+                pila.push(new Pair<>("id", "-"));
+                pila.push(new Pair<>("neg", "-"));
+                break;
+            case "cad":
+                parse += " 47";
+                pila.push(new Pair<>("37.1", "-"));
+                pila.push(new Pair<>("cad", "-"));
+                break;
+        }
+    }
+
+    private static void caseZ(String tokenAct) {
+        /* Z -> ( {38.1} L ) {38.2} */
+        if ("apar".equals(tokenAct)) {
+            parse += " 48";
+            pila.push(new Pair<>("cpar", "-"));
+            pila.push(new Pair<>("L", "-"));
+            pila.push(new Pair<>("apar", "-"));
+        } else {
+            parse += " 49";
+        }
+    }
+
+    private static void continuar(String estado){
+        if(!terminales.contains(pila.peek().getKey())){
+            estado = pila.peek().getKey();
+            readToken(tokenAct, estado);
+        }
+    }
+    public static boolean contieneNumeros(String cadena) {
+        for (int i = 0; i < cadena.length(); i++) {
+            if (Character.isDigit(cadena.charAt(i))) {
+                return true;
+            }
+        }
+    return false;
+    }
+
+    private static void equiparar(String token, String estado) {
+        if(token.equals(estado)){
+            pila.pop(); 
+        }
+        else{
+            //errores
+            
+        }
+    }
 }
