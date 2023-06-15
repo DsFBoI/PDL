@@ -197,16 +197,19 @@ public class Analizador {
             case "S":
                 caseS(tokenAct);
                 continuar(estado);
+                equiparar(TokenAct.pila.peek().getKey());
                 break;
 
             case "B":
                 caseB(tokenAct);
                 continuar(estado);
+                equiparar(TokenAct,pila.peek().getKey());
                 break;
 
             case "T":
                 caseT(tokenAct);
                 continuar(estado);
+                equiparar(TokenAct,pila.peek().getKey());
                 break;
 
             case "F":
@@ -293,6 +296,9 @@ public class Analizador {
                 caseZ(tokenAct);
                 continuar(estado);
                 break;
+
+            default:
+                equiparar(pila.peek().getValue(), tokenAct);
         }
     }
     private static void caseS(String tokenAct) {
