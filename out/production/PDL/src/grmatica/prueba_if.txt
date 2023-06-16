@@ -1,13 +1,4 @@
-function RR int (int n, boolean b)
-{
-    while( a == b ){
-        let log boolean;
-    }
-
-    a = 1 + 2 + 3 + 4;
-    return a;
+let a boolean;
+if(!a){
+    let string a;
 }
-
-b = a == c == d;
-
-print(a);
