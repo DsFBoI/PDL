@@ -24,8 +24,8 @@ public class Tokens {
     static String rutaWEsther = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
     static String rutaLDani = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if.txt";
     static String rutaWDani = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
-    static String rutaW = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
-    static String rutaL = "C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\PDL\\src\\grmatica\\prueba_if.txt";
+    static String rutaW = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt";
+    static String rutaL = "C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if.txt";
     static boolean checkpalabra = false;
     static boolean error = false;
     static String[]hola;
