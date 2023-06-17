@@ -1,4 +1,5 @@
-let a boolean;
-if(!a){
-    let string a;
+let a string;
+if(a){
+    b = 2;
+
 }
