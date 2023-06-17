@@ -9,7 +9,7 @@ import java.util.*;
 public class Analizador {
     private static String parse = "Des ";
     private static int[] saltos;
-    private static Pair<String, String> oldPair;
+    private static Pair<String, String> oldPair, oldPair2;
     private static Pair<String, String> newPair;
     private static Stack<Pair<String, String>> pila = new Stack();
     private static Stack<Pair<String, String>> pilaAux = new Stack();
@@ -753,16 +753,16 @@ public class Analizador {
                 pila.push(new Pair<>("id", "-"));
                 break;
             case "apar":
-                /*V -> ( {32.1} R ) {32.2}*/
+                /*V -> ( R ) {32.2}*/
                 parse += " 42";
-                pila.push(new Pair<>("32.2", "-"));
+                pila.push(new Pair<>("32.1", "-"));
                 pila.push(new Pair<>("cpar", "-"));
                 pila.push(new Pair<>("R", "-"));
-                pila.push(new Pair<>("32.1", "-"));
                 pila.push(new Pair<>("apar", "-"));
                 break;
 
             case "entera":
+                /*V->entera*/
                 parse += " 43";
                 pila.push(new Pair<>("33.1", "-"));
                 pila.push(new Pair<>("entera", "-"));
@@ -834,7 +834,10 @@ public class Analizador {
     private static void equiparar(String token, String estado) {
         if (continua == 0) {
             if (token.equals(estado)) {
-                pilaAux.push(pila.pop());
+                if(token.equals("id")){
+                    pilaAux.push(new Pair<>(pila.pop().getKey(),""+idPos));
+                }
+
             } else {
 
                 if (!contieneNumeros(estado) && !contieneNumeros(token)) {
@@ -881,8 +884,21 @@ public class Analizador {
 
     private static void acciones_sem(String token){
         switch(token){
-            case "1.1", "2.1":
+            case "1.1":
                 /*  */
+                oldPair = pilaAux.get(pilaAux.size()-3);
+                if( pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")){
+                    errores_sem(1);
+                    newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                }
+                else{
+                    newPair = new Pair<>(oldPair.getKey(), "tipo_OK");
+                }
+                pilaAux.set(pilaAux.size()-3, newPair);
+                destroyPilaAux(3);
+                break;
+            
+            case "2.1":
                 oldPair = pilaAux.get(pilaAux.size()-3);
                 if( pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")){
                     errores_sem(1);
@@ -918,6 +934,7 @@ public class Analizador {
                 }
                 destroyPilaAux(7);
                 break;
+
             case "4.1":
                 declaracion = true;
                 break;
@@ -953,7 +970,7 @@ public class Analizador {
             /*B -> while ( E ) {5.1} { M } {5.2}*/
             case "5.1":     //
                 oldPair = pilaAux.get(pilaAux.size()-6);
-                if(pilaAux.get(pilaAux.size()-3).getValue().equals("tipo_error")){
+                if(!pilaAux.get(pilaAux.size()-3).getValue().equals("boolean")){
                     errores_sem(3);
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
                 }
@@ -968,12 +985,31 @@ public class Analizador {
                 break;
 
             case "6.1":     //
-                /* B-> {6.1} K {6.2}*/
-
+                /* B-> {6.1} K {6.2}
+                if(function){ //PREGUNTAR EMIMLIE
+                    oldPair = pilaAux.get(pilaAux.size()-2);
+                    if(!pilaAux.get(pilaAux.size()-3).getValue().equals(tipoReturn)){
+                        errores_sem(4);
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                    }
+                    else {
+                        newPair = new Pair<>(oldPair.getKey(), oldPair.getValue());
+                    }
+                    pilaAux.set(pilaAux.size()-6, newPair);
+                }*/
                 break;
 
-            case "6.2":     //
-                destroyPilaAux(3);
+            case "6.2":     //* B-> {6.1} K {6.2}*/
+                    oldPair = pilaAux.get(pilaAux.size()-2);
+                    if(pilaAux.get(pilaAux.size()-3).getValue().equals("tipo_error")){
+                        errores_sem(4);
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                    }
+                    else {
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_ok");
+                    }
+                    pilaAux.set(pilaAux.size()-4, newPair);
+                    destroyPilaAux(3);
                 break;
 
             case "7.1":
@@ -1077,13 +1113,56 @@ public class Analizador {
 
             case "14.1":
                 /* M -> B {14.1} M {14.2}*/
-
+                oldPair = pilaAux.get(pila.size() - 2);
+                if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")){
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 3).getKey(), "tipo_error");
+                }
+                else{
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 3).getKey(), oldPair.getValue());
+                }
+                pilaAux.set(pilaAux.size() - 3, newPair);
                 break;
             case "14.2":
+                // { E.tipo = (if (I.tipo != void) Then I.tipo Else R.tipo); Pop.Aux(2) }
+                /* M -> B {14.1} M {14.2}*/
+                oldPair = pilaAux.get(pilaAux.size() - 2);
+                if(!pilaAux.get(pilaAux.size()-2).getValue().equals("void")){
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 5).getKey(), oldPair.getValue());
+                }
+                else{
+                    oldPair = pilaAux.get(pilaAux.size()-4);
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 5).getKey(), oldPair.getValue());
+                }
+                pilaAux.set(pilaAux.size() - 3, newPair);
+                destroyPilaAux(4);
                 break;
+                
             case "15.1":
+                 /*D -> { M } {15.1} */
+                oldPair = pilaAux.get(pila.size() - 3);
+                if(pilaAux.get(pilaAux.size()-3).getValue().equals("tipo_error")){
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 5).getKey(), "tipo_error");
+                    errores_sem(1);
+                }
+                else{
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 5).getKey(), oldPair.getValue());
+                }
+                pilaAux.set(pilaAux.size()-5, newPair);
+                destroyPilaAux(4);
                 break;
+
             case "16.1":
+                /*D -> K {16.1} */
+                oldPair = pilaAux.get(pila.size() - 2);
+                if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")){
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 5).getKey(), "tipo_error");
+                    errores_sem(1);
+                }
+                else{
+                    newPair = new Pair<>( pilaAux.get(pila.size() - 3).getKey(), oldPair.getValue());
+                }
+                pilaAux.set(pilaAux.size()-3, newPair);
+                destroyPilaAux(2);
                 break;
 
                 // casos de K:
@@ -1215,13 +1294,7 @@ public class Analizador {
 
                 destroyPilaAux(6);
                 break;
-            case "23.1":    // I -> = R ; {23.1}
-                String r_tipo_23_1 = pilaAux.get(pilaAux.size()-2).getValue(); // tipo de R
-                oldPair = pilaAux.get(pilaAux.size()-5); // I
-                newPair = new Pair<>(oldPair.getKey(), r_tipo_23_1);
-                pilaAux.set(pilaAux.size() - 4, newPair); //
-                destroyPilaAux(4);
-                break;
+
             case "22.1":    // I -> %= R ; {22.1}
                 String r_tipo_22_1 = pilaAux.get(pilaAux.size()-2).getValue(); // tipo de R
                 if(!r_tipo_22_1.equals("int")){
@@ -1238,10 +1311,20 @@ public class Analizador {
 
                 destroyPilaAux(4);
                 break;
+          
+
+            case "23.1":    // I -> = R ; {23.1}
+                String r_tipo_23_1 = pilaAux.get(pilaAux.size()-2).getValue(); // tipo de R
+                oldPair = pilaAux.get(pilaAux.size()-5); // I
+                newPair = new Pair<>(oldPair.getKey(), r_tipo_23_1);
+                pilaAux.set(pilaAux.size() - 4, newPair); //
+                destroyPilaAux(4);
+                break;
 
             /*L -> {24.1} R {24.2} A {24.3}*/
             case "24.1":
                 // crear lista de tipo de params cuando llamo a la funcion
+                lista_params = new ArrayList<>();
                 break;
 
             case "24.2":
@@ -1253,6 +1336,7 @@ public class Analizador {
 
             case "24.3":
                 // lista L = lista aux
+                lista_params_L = lista_params_aux;
                 destroyPilaAux(5);
                 break;
 
@@ -1260,34 +1344,112 @@ public class Analizador {
             case "25.1":
                 // lista aux le añadimos el tipo de R
                 // lista aux 2 = lista aux
-
+                oldPair = pilaAux.get(pilaAux.size()-2); // R
+                lista_params_aux.add(oldPair.getValue());
+                lista_params_aux2 = lista_params_aux;
                 break;
             case "25.2":
                 // si lista aux2 es dif de null entonces lista aux = lista aux 2
-                //
+                if(lista_params_aux2 != null){
+                    lista_params_aux  = lista_params_aux2;
+                }
                 destroyPilaAux(5);
                 break;
+
             case "26.1":
+                /*X -> R {26.1}*/
+                oldPair = pilaAux.get(pilaAux.size()-2); // R
+                oldPair2 = pilaAux.get(pilaAux.size()-3); // X
+                newPair = new Pair<>(oldPair2.getKey(), oldPair.getValue());
+                pilaAux.set(pilaAux.size() - 3, newPair); //
                 destroyPilaAux(2);
                 break;
+
             case "27.1":
+                /*R -> J {27.1} P {27.2}*/
+                //PREGUNTAR EMILIE comprobamos J tipo_Error ya lo hacemos en el 27.2
+                if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")){
+                    oldPair = pilaAux.get(pilaAux.size()-2); // R
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), "tipo_error");
+                }
+                pilaAux.set(pilaAux.size()-5, newPair); //
                 break;
+
             case "27.2":
+                if(!pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error") && !pilaAux.get(pilaAux.size()-4).getValue().equals("tipo_error")){
+                    oldPair = pilaAux.get(pilaAux.size()-4); // J
+                   if(!pilaAux.get(pilaAux.size()-2).getValue().equals("-") && oldPair.getValue().equals(pilaAux.get(pilaAux.size()-2).getValue())){
+                       newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), oldPair.getValue());
+                   }
+                    if(pilaAux.get(pilaAux.size()-2).getValue().equals("-")){
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), oldPair.getValue());
+                    }
+                }
+                else{
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), "tipo_error");
+                }
+
+                pilaAux.set(pilaAux.size()-5, newPair); //5
                 destroyPilaAux(4);
                 break;
-            case "28.1":
+
+            case "28.1": /*P -> == J {28.1} P {28.2} */
+                // PREGUNTAR EMILIE ya lo hacemose
+                if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error") ){
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-4).getKey(), "tipo_error");
+                }
+                pilaAux.set(pilaAux.size()-4, newPair); //
                 break;
+
             case "28.2":
-                destroyPilaAux(5);
+                    if(!pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error") && !pilaAux.get(pilaAux.size()-4).getValue().equals("tipo_error")) {
+                        oldPair = pilaAux.get(pilaAux.size()-4); // J
+                        if(!pilaAux.get(pilaAux.size()-2).getValue().equals("-") && oldPair.getValue().equals(pilaAux.get(pilaAux.size()-2).getValue())){
+                            newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), oldPair.getValue());
+                        }
+                        if(pilaAux.get(pilaAux.size()-2).getValue().equals("-")){
+                            newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), oldPair.getValue());
+                        }
+                    }else{
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), "tipo_error");
+                    }
+                destroyPilaAux(6);
                 break;
-            case "29.1":
+
+            case "29.1": //*J -> V {29.1} Y {29.2} */
+                //Preguntar emilie hace falta?
                 break;
+
             case "29.2":
+                if(!pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error") && !pilaAux.get(pilaAux.size()-4).getValue().equals("tipo_error")) {
+                    oldPair = pilaAux.get(pilaAux.size()-4); // V
+                    if(!pilaAux.get(pilaAux.size()-2).getValue().equals("-") && oldPair.getValue().equals(pilaAux.get(pilaAux.size()-2).getValue())){
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), oldPair.getValue());
+                    }
+                    if(pilaAux.get(pilaAux.size()-2).getValue().equals("-")){
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), oldPair.getValue());
+                    }
+                }else{
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-5).getKey(), "tipo_error");
+                }
                 destroyPilaAux(4);
                 break;
+
             case "30.1":
+                /*Y -> + V {30.1} Y {30.2}*/
                 break;
             case "30.2":
+                if(!pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error") && !pilaAux.get(pilaAux.size()-4).getValue().equals("tipo_error")) {
+                    oldPair = pilaAux.get(pilaAux.size()-4); // V
+                    if(!pilaAux.get(pilaAux.size()-2).getValue().equals("-") && oldPair.getValue().equals(pilaAux.get(pilaAux.size()-2).getValue())){
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), oldPair.getValue());
+                    }
+                    if(pilaAux.get(pilaAux.size()-2).getValue().equals("-")){
+                        newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), oldPair.getValue());
+                    }
+                }else{
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), "tipo_error");
+                }
                 destroyPilaAux(5);
                 break;
             case "31.1":
@@ -1331,8 +1493,8 @@ public class Analizador {
                 // mira el tipo de Z
                 if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")) {
                     errores_sem(1);
-                    Pair<String, String> oldPair = pilaAux.get(pila.size() - 3);
-                    Pair<String, String> newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                    oldPair = pilaAux.get(pila.size() - 3);
+                    newPair = new Pair<>(oldPair.getKey(), "tipo_error");
                     pilaAux.set(pilaAux.size() - 3, newPair);
                 }
                /* if(pilaAux.get(pilaAux.size()-x).getKey()).equals("apar"){
@@ -1341,15 +1503,21 @@ public class Analizador {
                 // hace 4 pops de Aux
                 destroyPilaAux(4);
                 break;
-            case "32.1":
-                break;
-            case "32.2":
-                destroyPilaAux(5);
-                break;
-            case "33.1":
-                destroyPilaAux(2);
 
+            case "32.1": /*V -> ( R ) {32.2}*/
+                oldPair = pilaAux.get(pila.size() - 2);
+                newPair = new Pair<>(pilaAux.get(pila.size() - 5).getValue(), oldPair.getValue());
+                pilaAux.set(pilaAux.size() - 5, newPair);
+                destroyPilaAux(4);
                 break;
+
+            case "33.1":
+                /*V->entera {33.1}*/
+                newPair = new Pair<>(pilaAux.get(pila.size() - 3).getValue(), "int");
+                pilaAux.set(pilaAux.size() - 3, newPair);
+                destroyPilaAux(2);
+                break;
+
             case "34.1":
                 pilaAux.set(pilaAux.size()-2,new Pair<>(pilaAux.get(pilaAux.size()-2).getKey(),"boolean"));
                 destroyPilaAux(2);
@@ -1360,17 +1528,30 @@ public class Analizador {
 
                 break;
             case "36.1":
-                //buscar en la TS el id y comprobar que sea boole
+                /*V -> ! id {36.1} Z {36.2}*/
+                //buscar en la TS el id y comprobar que sea boolean
+                idPos = Integer.parseInt(pilaAux.get(pilaAux.size()-2).getValue());
+                tipoReturn = tablaGlobal.get(mapa_id_pos.get(idPos)).getTipoDev();
+                if((function && !tipoReturn.equals("boolean")) || !pilaAux.get(pilaAux.size()-2).getValue().equals("boolean")){
+                    errores_sem(4);
+                }
+                else{
+                    pilaAux.set(pilaAux.size()-2,new Pair<>(pilaAux.get(pilaAux.size()-4).getKey(),"boolean"));
+                    pilaAux.set(pilaAux.size() - 4, newPair);
+                }
                 break;
 
             case "36.2":
-
-                destroyPilaAux(4);
+                if(pilaAux.get(pilaAux.size()-2).getValue().equals("tipo_error")) {
+                    errores_sem(1);
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(), "tipo_error");
+                    pilaAux.set(pilaAux.size() - 6, newPair);
+                }
+                destroyPilaAux(5);
 
                 break;
 
             case "37.1":
-
                 pilaAux.set(pilaAux.size()-2,new Pair<>(pilaAux.get(pilaAux.size()-2).getKey(),"cad"));
                 destroyPilaAux(2);
 
@@ -1443,6 +1624,9 @@ public class Analizador {
                     break;
                 case 3:
                     writer2.write("Error if mal declarado en la línea " + linea + "se esperaba tipo boolean y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue());
+                    break;
+                case 4:
+                    writer2.write("Error tipo RETURN no válido en la línea " + linea + "se esperaba tipo " + tipoReturn +  " y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue());
                     break;
             }
         }

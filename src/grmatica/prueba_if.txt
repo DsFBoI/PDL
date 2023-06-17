@@ -1,4 +1,1 @@
 let a string;
-if(a){
-    b = 2;
-}
