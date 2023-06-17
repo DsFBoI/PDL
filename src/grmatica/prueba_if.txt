@@ -1,1 +1,16 @@
 let a string;
+let b int;
+let x string;
+let c boolean;
+let v string;
+let w int;
+let n string;
+let t string;
+let y string;
+let u string;
+
+
+
+
+
+
