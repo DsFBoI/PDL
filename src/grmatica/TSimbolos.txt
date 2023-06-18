@@ -1,15 +1,709 @@
 ***************************************************************************************************************************
 
-######### TABLA: RR #########
+######### TABLA: FactorialRecursivo #########
 #Variable: n
 	tipo: int
 	direccion: 0
-#Variable: b
-	tipo: boolean
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: salto #########
+#Variable: n
+	tipo: int
+	direccion: 0
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: FactorialDo #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
 	direccion: 1
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: FactorialWhile #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: FactorialFor #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: imprime #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: cadena #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
 #Variable: log
 	tipo: boolean
+	direccion: 0
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: bisiesto #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
 	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: dias #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 1
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: esFechaCorrecta #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 1
+#Variable: d
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 1
+#Variable: a
+	tipo: int
+	direccion: 2
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: imprimeSuma #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 1
+#Variable: d
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 1
+#Variable: a
+	tipo: int
+	direccion: 2
+#Variable: v
+	tipo: int
+	direccion: 0
+#Variable: w
+	tipo: int
+	direccion: 1
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: potencia #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 1
+#Variable: d
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 1
+#Variable: a
+	tipo: int
+	direccion: 2
+#Variable: v
+	tipo: int
+	direccion: 0
+#Variable: w
+	tipo: int
+	direccion: 1
+#Variable: z
+	tipo: int
+	direccion: 0
+#Variable: dim
+	tipo: int
+	direccion: 1
+#Variable: s
+	tipo: int
+	direccion: 2
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA: demo #########
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: factorial
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: num
+	tipo: int
+	direccion: 2
+#Variable: n
+	tipo: int
+	direccion: 0
+#Variable: i
+	tipo: int
+	direccion: 1
+#Variable: factorial
+	tipo: int
+	direccion: 2
+#Variable: s
+	tipo: string
+	direccion: 0
+#Variable: msg
+	tipo: string
+	direccion: 32
+#Variable: f
+	tipo: int
+	direccion: 64
+#Variable: log
+	tipo: boolean
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 0
+#Variable: a
+	tipo: int
+	direccion: 1
+#Variable: d
+	tipo: int
+	direccion: 0
+#Variable: m
+	tipo: int
+	direccion: 1
+#Variable: a
+	tipo: int
+	direccion: 2
+#Variable: v
+	tipo: int
+	direccion: 0
+#Variable: w
+	tipo: int
+	direccion: 1
+#Variable: z
+	tipo: int
+	direccion: 0
+#Variable: dim
+	tipo: int
+	direccion: 1
+#Variable: s
+	tipo: int
+	direccion: 2
+#Variable: v1
+	tipo: int
+	direccion: 0
+#Variable: v2
+	tipo: int
+	direccion: 1
+#Variable: v3
+	tipo: int
+	direccion: 2
+#Variable: zv
+	tipo: int
+	direccion: 3
+#Variable: s
+	tipo: string
+	direccion: 4
+#Variable: v0
+	tipo: int
+	direccion: 36
+#Variable: i
+	tipo: int
+	direccion: 37
+#Variable: num
+	tipo: int
+	direccion: 38
+
+***************************************************************************************************************************
+
+***************************************************************************************************************************
+
+######### TABLA_GLOBAL: #########
+#Variable: s
+	tipo: string
+	direccion: 0
+#Función: FactorialRecursivo
+	tipo: function
+	direccion: 0
+	Nparam: 1
+	tipoParam: [int]
+	tipoDev: int
+	etiq: func1
+#Variable: uno
+	tipo: int
+	direccion: 32
+#Variable: UNO
+	tipo: int
+	direccion: 33
+#Variable: nn
+	tipo: string
+	direccion: 34
+#Función: salto
+	tipo: function
+	direccion: 0
+	Nparam: 0
+	tipoParam: []
+	tipoDev: string
+	etiq: func2
+#Función: FactorialDo
+	tipo: function
+	direccion: 0
+	Nparam: 1
+	tipoParam: [int]
+	tipoDev: int
+	etiq: func3
+#Función: FactorialWhile
+	tipo: function
+	direccion: 0
+	Nparam: 0
+	tipoParam: []
+	tipoDev: int
+	etiq: func4
+#Función: FactorialFor
+	tipo: function
+	direccion: 0
+	Nparam: 1
+	tipoParam: [int]
+	tipoDev: int
+	etiq: func5
+#Variable: For
+	tipo: int
+	direccion: 66
+#Variable: Do
+	tipo: int
+	direccion: 67
+#Variable: While
+	tipo: int
+	direccion: 68
+#Función: imprime
+	tipo: function
+	direccion: 0
+	Nparam: 3
+	tipoParam: [string, string, int]
+	tipoDev: void
+	etiq: func6
+#Función: cadena
+	tipo: function
+	direccion: 0
+	Nparam: 1
+	tipoParam: [boolean]
+	tipoDev: string
+	etiq: func7
+#Función: bisiesto
+	tipo: function
+	direccion: 0
+	Nparam: 1
+	tipoParam: [int]
+	tipoDev: boolean
+	etiq: func8
+#Función: dias
+	tipo: function
+	direccion: 0
+	Nparam: 2
+	tipoParam: [int, int]
+	tipoDev: int
+	etiq: func9
+#Función: esFechaCorrecta
+	tipo: function
+	direccion: 0
+	Nparam: 3
+	tipoParam: [int, int, int]
+	tipoDev: boolean
+	etiq: func10
+#Función: imprimeSuma
+	tipo: function
+	direccion: 0
+	Nparam: 2
+	tipoParam: [int, int]
+	tipoDev: void
+	etiq: func11
+#Función: potencia
+	tipo: function
+	direccion: 0
+	Nparam: 2
+	tipoParam: [int, int]
+	tipoDev: void
+	etiq: func12
+#Función: demo
+	tipo: function
+	direccion: 0
+	Nparam: 0
+	tipoParam: []
+	tipoDev: void
+	etiq: func13
 
 ***************************************************************************************************************************
 
