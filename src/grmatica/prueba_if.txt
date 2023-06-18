@@ -1,9 +1,8 @@
-let a string;
-let b boolean;
-c = 1 + b;
+function RR int (int n, boolean b)
+{
+	let log boolean;
+	log = n == 5;
+	input kk;
+	if (b == log)	return log;
 
-
-
-
-
-
+}
