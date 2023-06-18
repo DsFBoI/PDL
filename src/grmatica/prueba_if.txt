@@ -3,6 +3,9 @@ function RR int (int n, boolean b)
 	let log boolean;
 	log = n == 5;
 	input kk;
-	if (b == log)	return log;
+	if (b == log)	return 2;
 
 }
+
+let numero int ;
+numero = RR(1,false);

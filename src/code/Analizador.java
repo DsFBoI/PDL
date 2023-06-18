@@ -134,7 +134,7 @@ public class Analizador {
 
         String tokenCogido="";
 
-        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
 
             br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
@@ -278,7 +278,7 @@ public class Analizador {
                 errores(3);
             }
 
-            try (FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\parse.txt"), true);){
+            try (FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\parse.txt"), true);){
                 fw.write(parse);
 
 
@@ -288,7 +288,7 @@ public class Analizador {
             System.out.println(parse);
 
             if(pila.size() > 1){
-                if(terminales.contains(pila.peek()))
+                if(terminales.contains(pila.peek().getKey()))
                     errores(4);
             }
             while(!pila.empty()&&accsem.contains(pila.peek().getKey())){
@@ -1015,7 +1015,7 @@ public class Analizador {
         }
     }
  private static void errores(int coderror){
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
@@ -1066,7 +1066,7 @@ public class Analizador {
         }
     }
     private static void printTLocal() {
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
 
             fw.write("***************************************************************************************************************************\n\n");
@@ -1084,7 +1084,7 @@ public class Analizador {
     }
     public static void  printTGlobal(){
 
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
             fw.write("***************************************************************************************************************************\n\n");
             fw.write("######### TABLA_GLOBAL: #########"+"\n");
@@ -1511,17 +1511,23 @@ public class Analizador {
                 /* K -> id {20.1} I {20.2}*/
                 //  miro lo que me devuelve I y lo comparo con el tipo de id
                 oldPair = pilaAux.get(pilaAux.size() - 2); // I
+
                 if (!oldPair.getValue().equals(pilaAux.get(pilaAux.size()-5).getValue()) || oldPair.getValue().equals("tipo_error")) {
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                    errores_sem(7);
+
                     pilaAux.set(pilaAux.size() - 2, newPair); // seteamos el tipo de I al tipo del id
                     oldPair = pilaAux.get(pilaAux.size() - 5); // K
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
                     pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
-                }else{
+                    
+                }
+                else{
                     oldPair = pilaAux.get(pilaAux.size() - 5); // K
                     newPair = new Pair<>(oldPair.getKey(), "tipo_ok");
                     pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
                 }
+                
                 destroyPilaAux(4);
                 break;
 
@@ -1938,7 +1944,7 @@ public class Analizador {
     }
     private static void errores_sem(int i){
         int linea = linea_actu(contTok);
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
@@ -1959,6 +1965,10 @@ public class Analizador {
 
                 case 6:
                     writer2.write("Error id ya declarado en " + TsActual + " en linea "  + linea + "\n");
+                    break;
+
+                case 7:
+                    writer2.write("Error tipo no compatible: id de tipo " + pilaAux.get(pilaAux.size() - 5).getValue() + " con " + pilaAux.get(pilaAux.size() - 2).getValue() +  " en linea "  + linea + "\n");
                     break;
 
             }
