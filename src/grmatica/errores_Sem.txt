@@ -1,5 +1,0 @@
-Error tipo no compatible: id de tipo 17 con tipo_error en linea 73
-Error en retorno de funcion: se tiene que retornar - y se obtuvo - en linea 75
-Error tipo no compatible: id de tipo 20 con tipo_error en linea 108
-Error tipo no compatible: id de tipo 20 con tipo_error en linea 111
-Error tipo no compatible: id de tipo 29 con tipo_error en linea 112

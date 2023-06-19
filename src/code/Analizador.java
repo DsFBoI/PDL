@@ -35,6 +35,7 @@ public class Analizador {
     private static  String funcAct;
     private static String tipoReturn = "";
     private static String TsActual;
+    private static boolean paramFunc = false;
     private static HashMap<String, Dato_Tabla> tablaGlobal = new HashMap<>();
     private static ArrayList<Dato_Tabla> tablaGlobalarrayList = new ArrayList<>();
     private static ArrayList<Dato_Tabla> tablaLocalarrayList = new ArrayList<>();
@@ -135,7 +136,7 @@ public class Analizador {
 
         String tokenCogido="";
 
-        try(FileReader fr = new FileReader("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\prueba_if_token.txt")){
 
             br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
@@ -280,7 +281,7 @@ public class Analizador {
                 errores(3);
             }
 
-            try (FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\parse.txt"), true);){
+            try (FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\parse.txt"), true);){
                 fw.write(parse);
 
 
@@ -1017,7 +1018,7 @@ public class Analizador {
         }
     }
  private static void errores(int coderror){
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
@@ -1068,7 +1069,7 @@ public class Analizador {
         }
     }
     private static void printTLocal() {
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
 
             fw.write("***************************************************************************************************************************\n\n");
@@ -1086,7 +1087,7 @@ public class Analizador {
     }
     public static void  printTGlobal(){
 
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
             fw.write("***************************************************************************************************************************\n\n");
             fw.write("######### TABLA_GLOBAL: #########"+"\n");
@@ -1094,7 +1095,7 @@ public class Analizador {
             for (Dato_Tabla dt: tablaGlobalarrayList) {
                 String entrada=null;
                 if(dt.getTipo().equals("function")){
-                    entrada ="#Función: "+dt.getLexema() + "\n\ttipo: " +dt.getTipo() + "\n\tdireccion: " + dt.getDirec()+ "\n\tNparam: " + dt.getNparam()+ "\n\ttipoParam: " + dt.getTipoParam()+ "\n\ttipoDev: " + dt.getTipoDev()+ "\n\tetiq: " + dt.getEtiq()+"\n";
+                    entrada ="#Función: "+dt.getLexema() + "\n\ttipo: " +dt.getTipo() + "\n\tdireccion: \n\tNparam: " + dt.getNparam()+ "\n\ttipoParam: " + dt.getTipoParam()+ "\n\ttipoDev: " + dt.getTipoDev()+ "\n\tetiq: " + dt.getEtiq()+"\n";
 
                 }else{
                     entrada = "#Variable: "+dt.getLexema() + "\n\ttipo: " +dt.getTipo() + "\n\tdireccion: " + dt.getDirec()+"\n";
@@ -1320,10 +1321,14 @@ public class Analizador {
                 TsActual = "Global";
                 // destruir tabla de simbolos:
                 tablaLocal.clear();
+
+
                 printTLocal();
+                tablaLocalarrayList.clear();
                 tamanoTablaL = 0;
+                lista_params_aux.clear();
                 function = false;
-                lista_params.clear();
+
 
                 destroyPilaAux(14);
                 break;
@@ -1483,6 +1488,7 @@ public class Analizador {
                 //buscamos el tipo de id que se encuebtra en idpos
                 String id_actual = mapa_id_pos.get(idPos);
                 if (!tablaGlobal.containsKey(id_actual) && !tablaLocal.containsKey(id_actual)) {
+
                     newPair = new Pair<>(oldPair.getKey(), "int");
                     // hay que poner el tipo de I a int
                     casoTipoId = "int";
@@ -1537,22 +1543,34 @@ public class Analizador {
                 /* K -> id {20.1} I {20.2}*/
                 //  miro lo que me devuelve I y lo comparo con el tipo de id
                 oldPair = pilaAux.get(pilaAux.size() - 2); // I
+                oldPair2 = pilaAux.get(pilaAux.size() - 5); // K
 
-                if (!oldPair.getValue().equals(pilaAux.get(pilaAux.size()-5).getValue()) || oldPair.getValue().equals("tipo_error")) {
-                    newPair = new Pair<>(oldPair.getKey(), "tipo_error");
-                    errores_sem(7);
+                if (oldPair2.getValue().equals("function")) {
+                    if(oldPair.getValue().equals("tipo_ok")){
+                        newPair = new Pair<>(oldPair2.getKey(), "tipo_ok");
+                        pilaAux.set(pilaAux.size() - 5, newPair);
+                    }else{
+                        newPair = new Pair<>(oldPair2.getKey(), "tipo_error");
+                        pilaAux.set(pilaAux.size() - 5, newPair);
+                    }
+                }else{
+                    if (!oldPair.getValue().equals(pilaAux.get(pilaAux.size()-5).getValue()) || oldPair.getValue().equals("tipo_error")) {
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                        errores_sem(7);
 
-                    pilaAux.set(pilaAux.size() - 2, newPair); // seteamos el tipo de I al tipo del id
-                    oldPair = pilaAux.get(pilaAux.size() - 5); // K
-                    newPair = new Pair<>(oldPair.getKey(), "tipo_error");
-                    pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
-                    
+                        pilaAux.set(pilaAux.size() - 2, newPair); // seteamos el tipo de I al tipo del id
+                        oldPair = pilaAux.get(pilaAux.size() - 5); // K
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                        pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
+
+                    }
+                    else{
+                        oldPair = pilaAux.get(pilaAux.size() - 5); // K
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_ok");
+                        pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
+                    }
                 }
-                else{
-                    oldPair = pilaAux.get(pilaAux.size() - 5); // K
-                    newPair = new Pair<>(oldPair.getKey(), "tipo_ok");
-                    pilaAux.set(pilaAux.size() - 5, newPair); // seteamos el tipo de K al tipo del id
-                }
+
                 
                 destroyPilaAux(4);
                 break;
@@ -1561,24 +1579,34 @@ public class Analizador {
                 // miramos si estamos en una funcion si es el caso creamos una lista de tipo parametros
                 // que iremos comparando con la lista de tipos de param de la func y si no osn iguales lanza error
                 oldPair = pilaAux.get(pilaAux.size() - 2); // I
-                if (function){
-                    lista_params = new ArrayList<>();
-                    newPair = new Pair<>(oldPair.getKey(), "function");
+                paramFunc = true;
+                int aux = Integer.parseInt(pilaAux.get(pilaAux.size()-4).getValue());
+                String au2 = mapa_id_pos.get(aux);
+                if (function &&  tablaGlobal.containsKey(au2) || !function && tablaGlobal.containsKey(au2)){
+                    if(tablaGlobal.get(au2).getTipo().equals("function")){
+                        lista_params = new ArrayList<>();
+                        newPair = new Pair<>(oldPair.getKey(), "function");
+                    }else{
+                        newPair = new Pair<>(oldPair.getKey(), "tipo_error");
+                        errores_sem(9);
+                    }
                 }
                 else{
+                    errores_sem(10);
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
                 }
                 pilaAux.set(pilaAux.size() - 2, newPair); // seteamos el tipo de I
 
                 break;
-            case "21.2":  // I -> {21.1} ( L ) {21.2}
-                oldPair = pilaAux.get(pilaAux.size() - 3); // L
+            case "21.2":  /* I -> {21.1} ( L ) ; {21.2} */
+                oldPair = pilaAux.get(pilaAux.size() - 4); // L
                 boolean iguales = true;
-                if (!oldPair.getValue().equals("tipo_ok")) {
+                paramFunc = false;
+                if (oldPair.getValue().equals("tipo_error")) {
                     //error
-                    oldPair = pilaAux.get(pilaAux.size() - 6); // I
+                    oldPair = pilaAux.get(pilaAux.size() - 7); // I
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
-                    pilaAux.set(pilaAux.size() - 6, newPair); // seteamos el tipo de I a tipo_error si los parametros no estan bien
+                    pilaAux.set(pilaAux.size() - 7, newPair); // seteamos el tipo de I a tipo_error si los parametros no estan bien
                 }
                 else{
                     // tendriamos que comprobar los tipos de las listas
@@ -1587,17 +1615,17 @@ public class Analizador {
                         if(!lista_params.get(i).equals(aux_comproba.get(i))){
                             iguales = false;
                             newPair = new Pair<>(oldPair.getKey(), "tipo_error");
-                            pilaAux.set(pilaAux.size() - 6, newPair);
+                            pilaAux.set(pilaAux.size() - 7, newPair);
                             break;
                         }
                     }
                     if(iguales){
                         newPair = new Pair<>(oldPair.getKey(), "tipo_ok");
-                        pilaAux.set(pilaAux.size() - 6, newPair);
+                        pilaAux.set(pilaAux.size() - 7, newPair);
                     }
 
                 }
-                destroyPilaAux(5);
+                destroyPilaAux(6);
                 break;
 
             case "22.1":    // I -> %= R ; {22.1}
@@ -1628,7 +1656,8 @@ public class Analizador {
             /*L -> {24.1} R {24.2} A {24.3}*/
             case "24.1":
                 // crear lista de tipo de params cuando llamo a la funcion
-                lista_params = new ArrayList<>();
+
+                lista_params_aux = new ArrayList<>();
                 break;
 
             case "24.2": // /*L -> {24.1} R {24.2} A {24.3}*/
@@ -1644,7 +1673,7 @@ public class Analizador {
                 destroyPilaAux(5);
                 break;
 
-            /*A -> , R {25.1 } A{25.2} */
+            /*A -> , R {25.1 } A {25.2} */
             case "25.1":
                 // lista aux le añadimos el tipo de R
                 // lista aux 2 = lista aux
@@ -1748,7 +1777,6 @@ public class Analizador {
 
                 } else {
                     newPair = new Pair<>(pilaAux.get(pilaAux.size() - 4).getKey(), "tipo_error");
-                    errores_sem(1);
                 }
                 pilaAux.set(pilaAux.size() - 4, newPair);
                 destroyPilaAux(3);
@@ -1838,7 +1866,6 @@ public class Analizador {
                 // mira el tipo de Z
 
                 if (pilaAux.get(pilaAux.size() - 2).getValue().equals("tipo_error")) {
-                    errores_sem(1);
                     oldPair = pilaAux.get(pilaAux.size() - 5);
                     newPair = new Pair<>(oldPair.getKey(), "tipo_error");
                 }
@@ -1951,6 +1978,12 @@ public class Analizador {
                 break;
             /* Z -> ( {38.1} L ) {38.2} */
             case "38.1":
+
+                for (String s :lista_params_aux ) {
+                    lista_params.add(s);
+                }
+                lista_params_aux.clear();
+
                 pilaAux.set(pilaAux.size()-3,new Pair<>(pilaAux.get(pilaAux.size()-3).getKey(),"function"));
 
                 break;
@@ -1959,20 +1992,30 @@ public class Analizador {
                 String val3 = pilaAux.get(pilaAux.size()-8).getValue();
                 int key = Integer.parseInt(val3);
                 ArrayList<String> aux_comproba = func_dec.get(mapa_id_pos.get(key));
-                lista_params = lista_params_aux;
-                boolean comp = lista_params.size() == aux_comproba.size();
-                for (int i = 0; i < lista_params.size() && comp ; i++) {
-                    if(!lista_params.get(i).equals(aux_comproba.get(i))){
-                        comp = false;
-                        break;
+
+
+                if(aux_comproba!= null){
+                    boolean comp = lista_params_aux.size() == aux_comproba.size();
+                    for (int i = 0; i < lista_params_aux.size() && comp ; i++) {
+                        if(!lista_params_aux.get(i).equals(aux_comproba.get(i))){
+                            comp = false;
+                            break;
+                        }
                     }
-                }
-                if(comp){
-                    //error
-                    pilaAux.set(pilaAux.size()-6,new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(),"tipo_ok"));
-                    comp = false;
+                    if(comp){
+                        //error
+                        pilaAux.set(pilaAux.size()-6,new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(),"tipo_ok"));
+                        comp = false;
+                    }else{
+                        errores_sem(10);
+                        pilaAux.set(pilaAux.size()-6,new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(),"tipo_error"));
+                    }
                 }else{
-                    pilaAux.set(pilaAux.size()-6,new Pair<>(pilaAux.get(pilaAux.size()-6).getKey(),"tipo_error"));
+                    errores_sem(9);
+                }
+                lista_params_aux.clear();
+                for (String s :lista_params ) {
+                    lista_params_aux.add(s);
                 }
                 destroyPilaAux(5);
                 break;
@@ -2020,8 +2063,8 @@ public class Analizador {
         }
     }
     private static void errores_sem(int i){
-        int linea = linea_actu(contTok);
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
+        int linea = linea_actu(contTok-1);
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
@@ -2051,6 +2094,16 @@ public class Analizador {
                 case 8:
                     writer2.write("Error en retorno de funcion: se tiene que retornar "  + pilaAux.get(pilaAux.size() - 10).getValue() + " y se obtuvo " + pilaAux.get(pilaAux.size() - 2).getValue() +  " en linea "  + linea + "\n");
                     break;
+
+                case 9:
+                    writer2.write("Error id  no es una funcion o no existe linea "  + linea + "\n");
+                    break;
+
+                case 10:
+                    writer2.write("Error funcion con parametros diferentes "  + linea + "\n");
+                    break;
+
+
 
             }
         }
