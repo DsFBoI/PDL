@@ -63,44 +63,7 @@ function imprime (string s, string msg, int f)	// función que recibe 3 argument
 	return;	// finaliza la ejecución de la función (en este caso, se podría omitir)
 }
 
-function cadena string (boolean log)
-{
-	if (!log){
-	return s;
-	}
-	return s;
-}
 
-// Parte del programa principal:
-s = 'El factorial ';	// Primera sentencia que se ejecutaría
-
-print (s);
-print
- ('\nIntroduce un número');
-input num;
-
-
-function bisiesto boolean (int a)
-{
-	return
-		(a == 4 == 0 == a + 100 == 0 == a + 400 == 0);	//se tienen en cuenta la precedencia de operadores
-} // fin de bisiesto: función lógica
-
-function dias int (int m, int a)
-{
-return 3;
-} // fin de dias. Todos los return devuelven un entero y la función es entera
-
-function esFechaCorrecta boolean (int d, int m, int a)
-{
-	return m == 1 == m == 12 == d ==1 == d ==dias(m,a);
-} //fin de esFechaCorrecta
-
-function imprimeSuma (int v, int w)
-{
-	print (v + w);
-	print (salto());
-} //fin de imprimeSuma
 
 function potencia (int z, int dim)
 {

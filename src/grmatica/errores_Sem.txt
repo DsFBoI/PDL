@@ -1,9 +1,5 @@
-Error tipo no compatible: id de tipo 17 con tipo_error en linea 110
-Error en retorno de funcion: se tiene que retornar - y se obtuvo - en linea 112
-Error tipo no compatible: id de tipo 31 con tipo_error en linea 145
-Error tipo no compatible: id de tipo 31 con tipo_error en linea 148
-Error tipo no compatible: id de tipo 28 con tipo_error en linea 149
-Error de tipos en línea 150
-Error de tipos en línea 150
-Error tipo no compatible: id de tipo 17 con tipo_error en linea 150
-Error tipo no compatible: id de tipo 34 con tipo_error en linea 153
+Error tipo no compatible: id de tipo 17 con tipo_error en linea 73
+Error en retorno de funcion: se tiene que retornar - y se obtuvo - en linea 75
+Error tipo no compatible: id de tipo 20 con tipo_error en linea 108
+Error tipo no compatible: id de tipo 20 con tipo_error en linea 111
+Error tipo no compatible: id de tipo 29 con tipo_error en linea 112

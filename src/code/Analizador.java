@@ -3,7 +3,7 @@ package src.code;
 //import javafx.util.Pair;
 
 import javax.security.auth.callback.TextInputCallback;
-import javax.xml.rpc.holders.StringHolder;
+//import javax.xml.rpc.holders.StringHolder;
 import java.io.*;
 
 import java.util.*;
@@ -135,7 +135,7 @@ public class Analizador {
 
         String tokenCogido="";
 
-        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\prueba_if_token.txt")){
 
             br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
@@ -280,7 +280,7 @@ public class Analizador {
                 errores(3);
             }
 
-            try (FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\parse.txt"), true);){
+            try (FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\parse.txt"), true);){
                 fw.write(parse);
 
 
@@ -1017,7 +1017,7 @@ public class Analizador {
         }
     }
  private static void errores(int coderror){
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\erroresSin.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
@@ -1068,7 +1068,7 @@ public class Analizador {
         }
     }
     private static void printTLocal() {
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
 
             fw.write("***************************************************************************************************************************\n\n");
@@ -1086,7 +1086,7 @@ public class Analizador {
     }
     public static void  printTGlobal(){
 
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\TSimbolos.txt"), true);){
 
             fw.write("***************************************************************************************************************************\n\n");
             fw.write("######### TABLA_GLOBAL: #########"+"\n");
@@ -1111,6 +1111,7 @@ public class Analizador {
 
     }
     private static void acciones_sem(String token){
+        System.out.println("entrando en accion semantica " + token);
         switch(token) {
             case "1.1": /* S -> F S1 {1.1}*/
                 oldPair = pilaAux.get(pilaAux.size() - 4);   // S
@@ -1458,9 +1459,9 @@ public class Analizador {
                 String r_tipo = pilaAux.get(pilaAux.size() - 4).getValue();
                 oldPair = pilaAux.get(pilaAux.size() - 7); // par de K
                 if (r_tipo.equals("tipo_error")) {
-                    newPair = new Pair<>(pilaAux.get(pilaAux.size() - 3).getKey(), "tipo_error");
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size() - 7).getKey(), "tipo_error");
                 } else {
-                    newPair = new Pair<>(pilaAux.get(pilaAux.size() - 3).getKey(), "tipo_ok");
+                    newPair = new Pair<>(pilaAux.get(pilaAux.size() - 7).getKey(), "tipo_ok");
                 }
                 pilaAux.set(pilaAux.size() - 7, newPair);
                 destroyPilaAux(6);
@@ -2020,7 +2021,7 @@ public class Analizador {
     }
     private static void errores_sem(int i){
         int linea = linea_actu(contTok);
-        try(FileWriter fw = new FileWriter(new File("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
+        try(FileWriter fw = new FileWriter(new File("C:\\Users\\esthe\\Desktop\\upm\\tercero\\primer cuatri\\pdL\\practica\\entrega_Julio\\PDL\\src\\grmatica\\errores_Sem.txt"), true);){
 
             PrintWriter writer2 = new PrintWriter(fw);
 
