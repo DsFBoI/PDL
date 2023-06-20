@@ -1,0 +1,13 @@
+function hehe(int a, boolean b, string st){
+	if (b){
+		a = 3;
+	}
+	return a; 
+}
+
+
+let a int;
+let b boolean;
+a = b;
+
+b = hehe(a,true,''); 

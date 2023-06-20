@@ -1,0 +1,12 @@
+<let,->
+<id,1>
+<int,->
+<pcoma,->
+<let,->
+<id,2>
+<int,->
+<pcoma,->
+<id,1>
+<eq,->
+<id,2>
+<pcoma,->

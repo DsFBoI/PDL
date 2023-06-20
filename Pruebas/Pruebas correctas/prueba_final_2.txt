@@ -1,0 +1,7 @@
+function a boolean(int p, int b){
+	if ( b == p ){
+		w = 3; 
+	}
+	return true; 
+}
+

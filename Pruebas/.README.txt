@@ -1,0 +1,1 @@
+Esta pruebas se deben sustituir en el archivo prueba dentro de src/grmatica/prueba.txt

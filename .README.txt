@@ -1,0 +1,20 @@
+Aqui esta una guía de las carpetas:
+
+El codigo principal esta en:
+-src/code: 
+	-Tokens.java,
+	-Analizador.java 
+	-dos clases auxiliares para hacer las cosas mas faciles
+
+
+
+Los archivos txt donde se imprimen los resultados:
+-src/grmatica:
+	-prueba-> Donde se encuentra la prueba a ejecutar
+	-prueba_token-> los tokens de la prueba
+	-errores_sem-> errores semanticos
+	-parse-> el parse de la prueba
+	-erroresSin-> errores sintacticos
+	-TSimbolos-> Tabala de simbolos
+
+

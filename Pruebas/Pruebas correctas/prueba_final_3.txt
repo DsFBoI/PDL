@@ -1,0 +1,11 @@
+
+function func1 boolean (int a)
+{
+	return (a == 0 == a + 100 == 0 == a + 200 == 0);
+} 
+
+
+function esFechaCorrecta boolean (int d, int m, int a)
+{
+	return m==1==m==12==d==1==a;
+} 

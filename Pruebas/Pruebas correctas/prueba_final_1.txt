@@ -1,0 +1,3 @@
+let a int;
+let b int;
+a = b;

@@ -1,0 +1,18 @@
+b = 8;
+let c int; 
+c = b;
+let bb boolean;
+bb = true;   
+
+while(bb){
+	if ( c == b){
+		bb = false; 
+	}
+}
+
+if (bb) {
+	input z; 
+	c = b + 3; 
+}
+
+print(c); 

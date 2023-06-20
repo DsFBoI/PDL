@@ -2,7 +2,6 @@ package src.code;
 
 //import javafx.util.Pair;
 
-import javax.security.auth.callback.TextInputCallback;
 //import javax.xml.rpc.holders.StringHolder;
 import java.io.*;
 
@@ -123,7 +122,9 @@ public class Analizador {
 
     public static void main(String[] args) throws IOException {
         Tokens toke = new Tokens(0,0);
-        Tokens.main(null);
+
+            Tokens.main(null);
+
         TsActual = "Global";
         saltos = toke.saltos;
         String[] split = new String[0];
@@ -136,7 +137,7 @@ public class Analizador {
 
         String tokenCogido="";
 
-        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\prueba_if_token.txt")){
+        try(FileReader fr = new FileReader("C:\\Users\\danel\\Downloads\\calse\\PDL\\Trabajo julio\\nuevo\\PDL\\src\\grmatica\\prueba_token.txt")){
 
             br = new BufferedReader(fr);
             pila.push(new Pair<String,String>("$", "-"));
@@ -1024,7 +1025,7 @@ public class Analizador {
 
             switch(coderror){
                 case 1:
-                    writer2.write("Error en la linea " + linea_actu(contTok)+" : " + "Se esperaba "+ EstadoErr  + " se obtuvo " + tokenErr +"\n" );
+                    writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+": Se esperaba "+ EstadoErr  + " se obtuvo " + tokenErr +"\n" );
 
                     while(!pila.peek().getKey().equals("2.1") ){
                         pila.pop();
@@ -1040,26 +1041,26 @@ public class Analizador {
                     break;
                 case 2:
                     if(parentesis<0)
-                        writer2.write("Error:  mayor numero de cierre de parentesis" );
+                        writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+":  mayor numero de cierre de parentesis" );
                     else
-                        writer2.write("Error:  mayor numero de apertura de parentesis  " );
+                        writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+":  mayor numero de apertura de parentesis  " );
                     break;
 
                 case 3:
                     if(llaves<0)
-                        writer2.write("Error:  mayor numero de cierre de llaves" );
+                        writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+":  mayor numero de cierre de llaves" );
                     else
-                        writer2.write("Error:  mayor numero de apertura de llaves  " );
+                        writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+":  mayor numero de apertura de llaves  " );
                     break;
 
                 case 4:
                     if(pila.size()!= 1){
-                        writer2.write("Falta el token : "+ pila.pop().getKey() + "\n" );
+                        writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+": falta el token "+ pila.pop().getKey() + "\n" );
                     }
                     break;
                 case 5:
                     error = true;
-                    writer2.write("Error en la linea: "  + linea_actu(contTok)+ " necesario una declaracion entre parentesis"  + "\n" );
+                    writer2.write("Error sintactico "+ coderror +" en linea " + linea_actu(contTok)+": necesario una declaracion entre parentesis"  + "\n" );
                     break ;
             }
         }
@@ -2070,37 +2071,37 @@ public class Analizador {
 
             switch(i){
                 case 1:
-                    writer2.write("Error de tipos en línea " + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+ linea +" de tipos en línea " + linea + "\n");
                     break;
                 case 3:
-                    writer2.write("Error if mal declarado en la línea " + linea + " se esperaba tipo boolean y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue() + "\n");
+                    writer2.write("Error semantico "+i+" en linea " + linea + ": se esperaba tipo boolean y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue() + "\n");
                     break;
                 case 4:
-                    writer2.write("Error tipo RETURN no válido en la línea " + linea + " se esperaba tipo " + tipoReturn +  " y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue() + "\n");
+                    writer2.write("Error semantico "+i+" en linea " + linea + ": se esperaba return tipo " + tipoReturn +  " y se obtuvo " + pilaAux.get(pilaAux.size()-3).getValue() + "\n");
                     break;
 
                 case 5:
-                    writer2.write("Error tipo tipos incopatibles " +oldPair.getValue() + " con " + pilaAux.get(pilaAux.size()-2).getValue()  + " en linea "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea " +linea + ": tipos incopatibles " +oldPair.getValue() + " con " +  pilaAux.get(pilaAux.size()-2).getValue()  + "\n");
                     break;
 
                 case 6:
-                    writer2.write("Error id ya declarado en " + TsActual + " en linea "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+linea +": id ya declarado en " + TsActual + "\n");
                     break;
 
                 case 7:
-                    writer2.write("Error tipo no compatible: id de tipo " + pilaAux.get(pilaAux.size() - 5).getValue() + " con " + pilaAux.get(pilaAux.size() - 2).getValue() +  " en linea "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+linea +": tipo no compatible id de tipo " + pilaAux.get(pilaAux.size() - 5).getValue() + " con " + pilaAux.get(pilaAux.size() - 2).getValue()  + "\n");
                     break;
 
                 case 8:
-                    writer2.write("Error en retorno de funcion: se tiene que retornar "  + pilaAux.get(pilaAux.size() - 10).getValue() + " y se obtuvo " + pilaAux.get(pilaAux.size() - 2).getValue() +  " en linea "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+linea +": retorno de funcion: se tiene que retornar "  + pilaAux.get(pilaAux.size() - 10).getValue() + " y se obtuvo " + pilaAux.get(pilaAux.size() - 2).getValue() + "\n");
                     break;
 
                 case 9:
-                    writer2.write("Error id  no es una funcion o no existe linea "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+linea +": id  no es una funcion o no existe"  +  "\n");
                     break;
 
                 case 10:
-                    writer2.write("Error funcion con parametros diferentes "  + linea + "\n");
+                    writer2.write("Error semantico "+i+" en linea "+linea +": funcion con parametros diferentes"  +  "\n");
                     break;
 
 

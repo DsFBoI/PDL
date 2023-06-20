@@ -1,0 +1,11 @@
+let a string;
+function FactorialDo int (int n)
+{
+	let factorial int;	// variable local inicializada a uno
+	
+	factorial %= n;	// equivale a: factorial = factorial * n; n = n - 1;
+	while (a == 0){
+			// mientras n no sea 0
+	}
+	return factorial;		// devuelve el valor entero de la variable factorial
+}

@@ -1,0 +1,14 @@
+let s string; 
+input x;
+let num int; 
+let numdos int; 
+let final string; 
+
+function hola(int a, int b){
+	if ( a == b){
+		s = 'HOLA';
+	}
+	
+}
+hola(num, numdos); 
+

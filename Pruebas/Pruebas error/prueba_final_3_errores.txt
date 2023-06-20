@@ -1,0 +1,10 @@
+let b int;
+function a (boolean f, int x){
+	let a string;
+	return a; 
+}
+
+function otra int (boolean f, int x){
+	let a string;
+	return a; 
+}

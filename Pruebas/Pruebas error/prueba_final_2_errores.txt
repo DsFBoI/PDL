@@ -1,0 +1,8 @@
+let b boolean; 
+let a int; 
+
+input (a); 
+
+while ( 2 ) {
+	c = true; 
+}
